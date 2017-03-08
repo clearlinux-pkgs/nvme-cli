@@ -4,12 +4,14 @@
 #
 Name     : nvme-cli
 Version  : 1.1
-Release  : 2
+Release  : 3
 URL      : https://github.com/linux-nvme/nvme-cli/archive/v1.1.tar.gz
 Source0  : https://github.com/linux-nvme/nvme-cli/archive/v1.1.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0
+Requires: nvme-cli-bin
+Patch1: build.patch
 
 %description
 nvmetests
@@ -18,22 +20,30 @@ This contains NVMe unit tests framework. The purpose of this framework
 to use nvme cli and test various supported commands and scenarios for
 NVMe device.
 
+%package bin
+Summary: bin components for the nvme-cli package.
+Group: Binaries
+
+%description bin
+bin components for the nvme-cli package.
+
+
 %prep
 %setup -q -n nvme-cli-1.1
+%patch1 -p1
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1488983794
+export SOURCE_DATE_EPOCH=1488983948
 make V=1  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1488983794
+export SOURCE_DATE_EPOCH=1488983948
 rm -rf %{buildroot}
 %make_install
 
 %files
 %defattr(-,root,root,-)
-/usr/local/sbin/nvme
 /usr/local/share/man/man1/nvme-admin-passthru.1
 /usr/local/share/man/man1/nvme-attach-ns.1
 /usr/local/share/man/man1/nvme-compare.1
@@ -92,3 +102,7 @@ rm -rf %{buildroot}
 /usr/local/share/man/man1/nvme-write-zeroes.1
 /usr/local/share/man/man1/nvme-write.1
 /usr/local/share/man/man1/nvme.1
+
+%files bin
+%defattr(-,root,root,-)
+/usr/bin/nvme

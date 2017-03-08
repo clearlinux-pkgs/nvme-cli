@@ -1,0 +1,11 @@
+--- nvme-cli-1.1/Makefile~	2016-12-21 22:24:31.000000000 +0000
++++ nvme-cli-1.1/Makefile	2017-03-08 14:37:39.749554795 +0000
+@@ -4,7 +4,7 @@
+ NVME = nvme
+ INSTALL ?= install
+ DESTDIR =
+-PREFIX ?= /usr/local
++PREFIX ?= /usr/
+ SYSCONFDIR = /etc
+ SBINDIR = $(PREFIX)/sbin
+ LIB_DEPENDS =
