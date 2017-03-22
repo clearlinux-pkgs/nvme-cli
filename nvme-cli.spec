@@ -4,7 +4,7 @@
 #
 Name     : nvme-cli
 Version  : 1.2
-Release  : 4
+Release  : 5
 URL      : http://github.com/linux-nvme/nvme-cli/archive/v1.2.tar.gz
 Source0  : http://github.com/linux-nvme/nvme-cli/archive/v1.2.tar.gz
 Summary  : No detailed summary available
@@ -12,6 +12,7 @@ Group    : Development/Tools
 License  : GPL-2.0
 Requires: nvme-cli-bin
 Requires: nvme-cli-data
+Requires: nvme-cli-doc
 Patch1: build.patch
 
 %description
@@ -38,88 +39,30 @@ Group: Data
 data components for the nvme-cli package.
 
 
+%package doc
+Summary: doc components for the nvme-cli package.
+Group: Documentation
+
+%description doc
+doc components for the nvme-cli package.
+
+
 %prep
 %setup -q -n nvme-cli-1.2
 %patch1 -p1
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1489677058
+export SOURCE_DATE_EPOCH=1490219886
 make V=1  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1489677058
+export SOURCE_DATE_EPOCH=1490219886
 rm -rf %{buildroot}
 %make_install
 
 %files
 %defattr(-,root,root,-)
-/usr/local/share/man/man1/nvme-admin-passthru.1
-/usr/local/share/man/man1/nvme-attach-ns.1
-/usr/local/share/man/man1/nvme-compare.1
-/usr/local/share/man/man1/nvme-connect-all.1
-/usr/local/share/man/man1/nvme-connect.1
-/usr/local/share/man/man1/nvme-create-ns.1
-/usr/local/share/man/man1/nvme-delete-ns.1
-/usr/local/share/man/man1/nvme-detach-ns.1
-/usr/local/share/man/man1/nvme-disconnect.1
-/usr/local/share/man/man1/nvme-discover.1
-/usr/local/share/man/man1/nvme-dsm.1
-/usr/local/share/man/man1/nvme-error-log.1
-/usr/local/share/man/man1/nvme-flush.1
-/usr/local/share/man/man1/nvme-format.1
-/usr/local/share/man/man1/nvme-fw-activate.1
-/usr/local/share/man/man1/nvme-fw-download.1
-/usr/local/share/man/man1/nvme-fw-log.1
-/usr/local/share/man/man1/nvme-gen-hostnqn.1
-/usr/local/share/man/man1/nvme-get-feature.1
-/usr/local/share/man/man1/nvme-get-log.1
-/usr/local/share/man/man1/nvme-get-ns-id.1
-/usr/local/share/man/man1/nvme-help.1
-/usr/local/share/man/man1/nvme-id-ctrl.1
-/usr/local/share/man/man1/nvme-id-ns.1
-/usr/local/share/man/man1/nvme-intel-id-ctrl.1
-/usr/local/share/man/man1/nvme-intel-internal-log.1
-/usr/local/share/man/man1/nvme-intel-lat-stats.1
-/usr/local/share/man/man1/nvme-intel-market-name.1
-/usr/local/share/man/man1/nvme-intel-smart-log-add.1
-/usr/local/share/man/man1/nvme-intel-temp-stats.1
-/usr/local/share/man/man1/nvme-io-passthru.1
-/usr/local/share/man/man1/nvme-list-ctrl.1
-/usr/local/share/man/man1/nvme-list-ns.1
-/usr/local/share/man/man1/nvme-list.1
-/usr/local/share/man/man1/nvme-lnvm-create.1
-/usr/local/share/man/man1/nvme-lnvm-diag-bbtbl.1
-/usr/local/share/man/man1/nvme-lnvm-diag-set-bbtbl.1
-/usr/local/share/man/man1/nvme-lnvm-factory.1
-/usr/local/share/man/man1/nvme-lnvm-id-ns.1
-/usr/local/share/man/man1/nvme-lnvm-info.1
-/usr/local/share/man/man1/nvme-lnvm-init.1
-/usr/local/share/man/man1/nvme-lnvm-list.1
-/usr/local/share/man/man1/nvme-lnvm-remove.1
-/usr/local/share/man/man1/nvme-read.1
-/usr/local/share/man/man1/nvme-reset.1
-/usr/local/share/man/man1/nvme-resv-acquire.1
-/usr/local/share/man/man1/nvme-resv-register.1
-/usr/local/share/man/man1/nvme-resv-release.1
-/usr/local/share/man/man1/nvme-resv-report.1
-/usr/local/share/man/man1/nvme-security-recv.1
-/usr/local/share/man/man1/nvme-security-send.1
-/usr/local/share/man/man1/nvme-set-feature.1
-/usr/local/share/man/man1/nvme-show-regs.1
-/usr/local/share/man/man1/nvme-smart-log.1
-/usr/local/share/man/man1/nvme-subsystem-reset.1
-/usr/local/share/man/man1/nvme-wdc-cap-diag.1
-/usr/local/share/man/man1/nvme-wdc-drive-log.1
-/usr/local/share/man/man1/nvme-wdc-get-crash-dump.1
-/usr/local/share/man/man1/nvme-wdc-id-ctrl.1
-/usr/local/share/man/man1/nvme-wdc-purge-monitor.1
-/usr/local/share/man/man1/nvme-wdc-purge.1
-/usr/local/share/man/man1/nvme-wdc-smart-log-add.1
-/usr/local/share/man/man1/nvme-write-uncor.1
-/usr/local/share/man/man1/nvme-write-zeroes.1
-/usr/local/share/man/man1/nvme-write.1
-/usr/local/share/man/man1/nvme.1
 
 %files bin
 %defattr(-,root,root,-)
@@ -128,3 +71,7 @@ rm -rf %{buildroot}
 %files data
 %defattr(-,root,root,-)
 /usr/share/bash_completion.d/nvme
+
+%files doc
+%defattr(-,root,root,-)
+%doc /usr/share/man/man1/*
