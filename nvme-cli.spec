@@ -4,7 +4,7 @@
 #
 Name     : nvme-cli
 Version  : 1.5
-Release  : 9
+Release  : 10
 URL      : https://github.com/linux-nvme/nvme-cli/archive/v1.5.tar.gz
 Source0  : https://github.com/linux-nvme/nvme-cli/archive/v1.5.tar.gz
 Summary  : No detailed summary available
