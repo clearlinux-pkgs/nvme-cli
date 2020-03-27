@@ -4,7 +4,7 @@
 #
 Name     : nvme-cli
 Version  : 1.8.1
-Release  : 14
+Release  : 15
 URL      : https://github.com/linux-nvme/nvme-cli/archive/v1.8.1/nvme-cli-1.8.1.tar.gz
 Source0  : https://github.com/linux-nvme/nvme-cli/archive/v1.8.1/nvme-cli-1.8.1.tar.gz
 Summary  : NVM-Express user space tooling for Linux
