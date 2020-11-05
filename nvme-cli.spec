@@ -4,10 +4,10 @@
 #
 Name     : nvme-cli
 Version  : 1.8.1
-Release  : 15
+Release  : 16
 URL      : https://github.com/linux-nvme/nvme-cli/archive/v1.8.1/nvme-cli-1.8.1.tar.gz
 Source0  : https://github.com/linux-nvme/nvme-cli/archive/v1.8.1/nvme-cli-1.8.1.tar.gz
-Summary  : NVM-Express user space tooling for Linux
+Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0
 Requires: nvme-cli-bin = %{version}-%{release}
@@ -57,23 +57,29 @@ man components for the nvme-cli package.
 
 %prep
 %setup -q -n nvme-cli-1.8.1
+cd %{_builddir}/nvme-cli-1.8.1
 %patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1554856558
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1604606322
 unset LD_AS_NEEDED
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$FFLAGS -fno-lto "
+export FFLAGS="$FFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1554856558
+export SOURCE_DATE_EPOCH=1604606322
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nvme-cli
-cp LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/LICENSE
+cp %{_builddir}/nvme-cli-1.8.1/LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/23a1f87d806ce0330b3d85485e399a5f9f553409
 %make_install
 
 %files
@@ -90,7 +96,7 @@ cp LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/LICENSE
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/nvme-cli/LICENSE
+/usr/share/package-licenses/nvme-cli/23a1f87d806ce0330b3d85485e399a5f9f553409
 
 %files man
 %defattr(0644,root,root,0755)
