@@ -1,0 +1,2 @@
+mkdir -p %{buildroot}/usr/bin
+mv %{buildroot}/usr/sbin/* %{buildroot}/usr/bin

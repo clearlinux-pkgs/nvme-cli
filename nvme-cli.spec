@@ -5,7 +5,7 @@
 #
 Name     : nvme-cli
 Version  : 2.4
-Release  : 20
+Release  : 21
 URL      : https://github.com/linux-nvme/nvme-cli/archive/v2.4/nvme-cli-2.4.tar.gz
 Source0  : https://github.com/linux-nvme/nvme-cli/archive/v2.4/nvme-cli-2.4.tar.gz
 Summary  : No detailed summary available
@@ -76,16 +76,13 @@ services components for the nvme-cli package.
 %prep
 %setup -q -n nvme-cli-2.4
 cd %{_builddir}/nvme-cli-2.4
-pushd ..
-cp -a nvme-cli-2.4 buildavx2
-popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1687980099
+export SOURCE_DATE_EPOCH=1687980966
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
@@ -94,8 +91,6 @@ export FFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-l
 export CXXFLAGS="$CXXFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddir
 ninja -v -C builddir
-CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 -O3" CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 " LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3" meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddiravx2
-ninja -v -C builddiravx2
 
 %check
 export LANG=C.UTF-8
@@ -113,11 +108,13 @@ cp %{_builddir}/nvme-cli-%{version}/ccan/ccan/container_of/LICENSE %{buildroot}/
 cp %{_builddir}/nvme-cli-%{version}/ccan/ccan/endian/LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/3e8117303a7ac9ce341dc761b8a4f5ac3696e0a3 || :
 cp %{_builddir}/nvme-cli-%{version}/ccan/ccan/list/LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/2807f3f1c4cb33b214defc4c7ab72f7e4e70a305 || :
 cp %{_builddir}/nvme-cli-%{version}/ccan/ccan/str/LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/3e8117303a7ac9ce341dc761b8a4f5ac3696e0a3 || :
-DESTDIR=%{buildroot}-v3 ninja -C builddiravx2 install
 DESTDIR=%{buildroot} ninja -C builddir install
 ## Remove excluded files
 rm -f %{buildroot}*/usr/etc/nvme/discovery.conf
-/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
+## install_append content
+mkdir -p %{buildroot}/usr/bin
+mv %{buildroot}/usr/sbin/* %{buildroot}/usr/bin
+## install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -125,8 +122,7 @@ rm -f %{buildroot}*/usr/etc/nvme/discovery.conf
 
 %files bin
 %defattr(-,root,root,-)
-/V3/usr/bin/nvme
-/usr/sbin/nvme
+/usr/bin/nvme
 
 %files config
 %defattr(-,root,root,-)
