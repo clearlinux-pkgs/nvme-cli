@@ -4,10 +4,10 @@
 # Using build pattern: meson
 #
 Name     : nvme-cli
-Version  : 2.4
-Release  : 21
-URL      : https://github.com/linux-nvme/nvme-cli/archive/v2.4/nvme-cli-2.4.tar.gz
-Source0  : https://github.com/linux-nvme/nvme-cli/archive/v2.4/nvme-cli-2.4.tar.gz
+Version  : 2.5
+Release  : 22
+URL      : https://github.com/linux-nvme/nvme-cli/archive/v2.5/nvme-cli-2.5.tar.gz
+Source0  : https://github.com/linux-nvme/nvme-cli/archive/v2.5/nvme-cli-2.5.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : CC0-1.0 GPL-2.0 MIT
@@ -74,15 +74,15 @@ services components for the nvme-cli package.
 
 
 %prep
-%setup -q -n nvme-cli-2.4
-cd %{_builddir}/nvme-cli-2.4
+%setup -q -n nvme-cli-2.5
+cd %{_builddir}/nvme-cli-2.5
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1687980966
+export SOURCE_DATE_EPOCH=1688148174
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
