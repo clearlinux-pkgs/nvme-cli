@@ -4,13 +4,13 @@
 # Using build pattern: meson
 #
 Name     : nvme-cli
-Version  : 2.5
-Release  : 22
-URL      : https://github.com/linux-nvme/nvme-cli/archive/v2.5/nvme-cli-2.5.tar.gz
-Source0  : https://github.com/linux-nvme/nvme-cli/archive/v2.5/nvme-cli-2.5.tar.gz
+Version  : 2.6
+Release  : 23
+URL      : https://github.com/linux-nvme/nvme-cli/archive/v2.6/nvme-cli-2.6.tar.gz
+Source0  : https://github.com/linux-nvme/nvme-cli/archive/v2.6/nvme-cli-2.6.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
-License  : CC0-1.0 GPL-2.0 MIT
+License  : CC0-1.0 GPL-2.0 LGPL-2.1 MIT
 Requires: nvme-cli-bin = %{version}-%{release}
 Requires: nvme-cli-config = %{version}-%{release}
 Requires: nvme-cli-data = %{version}-%{release}
@@ -74,22 +74,28 @@ services components for the nvme-cli package.
 
 
 %prep
-%setup -q -n nvme-cli-2.5
-cd %{_builddir}/nvme-cli-2.5
+%setup -q -n nvme-cli-2.6
+cd %{_builddir}/nvme-cli-2.6
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1688148174
+export SOURCE_DATE_EPOCH=1695997447
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
-export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
-export FFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
-export CXXFLAGS="$CXXFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
-CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddir
+CLEAR_INTERMEDIATE_CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_FCFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS"
+CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS"
+FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
+FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
+ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
+LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
+meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddir
 ninja -v -C builddir
 
 %check
@@ -100,14 +106,32 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 meson test -C builddir --print-errorlogs
 
 %install
+export GCC_IGNORE_WERROR=1
+CLEAR_INTERMEDIATE_CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_FCFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS"
+CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS"
+FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
+FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
+ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
+LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
 mkdir -p %{buildroot}/usr/share/package-licenses/nvme-cli
 cp %{_builddir}/nvme-cli-%{version}/LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/23a1f87d806ce0330b3d85485e399a5f9f553409 || :
 cp %{_builddir}/nvme-cli-%{version}/ccan/ccan/build_assert/LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/3e8117303a7ac9ce341dc761b8a4f5ac3696e0a3 || :
 cp %{_builddir}/nvme-cli-%{version}/ccan/ccan/check_type/LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/3e8117303a7ac9ce341dc761b8a4f5ac3696e0a3 || :
+cp %{_builddir}/nvme-cli-%{version}/ccan/ccan/compiler/LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/3e8117303a7ac9ce341dc761b8a4f5ac3696e0a3 || :
 cp %{_builddir}/nvme-cli-%{version}/ccan/ccan/container_of/LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/3e8117303a7ac9ce341dc761b8a4f5ac3696e0a3 || :
 cp %{_builddir}/nvme-cli-%{version}/ccan/ccan/endian/LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/3e8117303a7ac9ce341dc761b8a4f5ac3696e0a3 || :
+cp %{_builddir}/nvme-cli-%{version}/ccan/ccan/hash/LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/3e8117303a7ac9ce341dc761b8a4f5ac3696e0a3 || :
+cp %{_builddir}/nvme-cli-%{version}/ccan/ccan/htable/LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/9a1929f4700d2407c70b507b3b2aaf6226a9543c || :
+cp %{_builddir}/nvme-cli-%{version}/ccan/ccan/ilog/LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/3e8117303a7ac9ce341dc761b8a4f5ac3696e0a3 || :
+cp %{_builddir}/nvme-cli-%{version}/ccan/ccan/likely/LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/3e8117303a7ac9ce341dc761b8a4f5ac3696e0a3 || :
 cp %{_builddir}/nvme-cli-%{version}/ccan/ccan/list/LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/2807f3f1c4cb33b214defc4c7ab72f7e4e70a305 || :
+cp %{_builddir}/nvme-cli-%{version}/ccan/ccan/short_types/LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/3e8117303a7ac9ce341dc761b8a4f5ac3696e0a3 || :
 cp %{_builddir}/nvme-cli-%{version}/ccan/ccan/str/LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/3e8117303a7ac9ce341dc761b8a4f5ac3696e0a3 || :
+cp %{_builddir}/nvme-cli-%{version}/ccan/ccan/typesafe_cb/LICENSE %{buildroot}/usr/share/package-licenses/nvme-cli/3e8117303a7ac9ce341dc761b8a4f5ac3696e0a3 || :
 DESTDIR=%{buildroot} ninja -C builddir install
 ## Remove excluded files
 rm -f %{buildroot}*/usr/etc/nvme/discovery.conf
@@ -139,6 +163,7 @@ mv %{buildroot}/usr/sbin/* %{buildroot}/usr/bin
 /usr/share/package-licenses/nvme-cli/23a1f87d806ce0330b3d85485e399a5f9f553409
 /usr/share/package-licenses/nvme-cli/2807f3f1c4cb33b214defc4c7ab72f7e4e70a305
 /usr/share/package-licenses/nvme-cli/3e8117303a7ac9ce341dc761b8a4f5ac3696e0a3
+/usr/share/package-licenses/nvme-cli/9a1929f4700d2407c70b507b3b2aaf6226a9543c
 
 %files services
 %defattr(-,root,root,-)
