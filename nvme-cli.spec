@@ -6,10 +6,10 @@
 # autospec commit: c1050fe
 #
 Name     : nvme-cli
-Version  : 2.6
-Release  : 24
-URL      : https://github.com/linux-nvme/nvme-cli/archive/v2.6/nvme-cli-2.6.tar.gz
-Source0  : https://github.com/linux-nvme/nvme-cli/archive/v2.6/nvme-cli-2.6.tar.gz
+Version  : 2.7
+Release  : 25
+URL      : https://github.com/linux-nvme/nvme-cli/archive/v2.7/nvme-cli-2.7.tar.gz
+Source0  : https://github.com/linux-nvme/nvme-cli/archive/v2.7/nvme-cli-2.7.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : CC0-1.0 GPL-2.0 LGPL-2.1 MIT
@@ -76,15 +76,15 @@ services components for the nvme-cli package.
 
 
 %prep
-%setup -q -n nvme-cli-2.6
-cd %{_builddir}/nvme-cli-2.6
+%setup -q -n nvme-cli-2.7
+cd %{_builddir}/nvme-cli-2.7
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1702040966
+export SOURCE_DATE_EPOCH=1702999265
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 CLEAR_INTERMEDIATE_CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
@@ -152,8 +152,9 @@ mv %{buildroot}/usr/sbin/* %{buildroot}/usr/bin
 
 %files config
 %defattr(-,root,root,-)
+/usr/lib/udev/rules.d/65-persistent-net-nbft.rules
 /usr/lib/udev/rules.d/70-nvmf-autoconnect.rules
-/usr/lib/udev/rules.d/71-nvmf-iopolicy-netapp.rules
+/usr/lib/udev/rules.d/71-nvmf-netapp.rules
 
 %files data
 %defattr(-,root,root,-)
@@ -171,5 +172,6 @@ mv %{buildroot}/usr/sbin/* %{buildroot}/usr/bin
 %defattr(-,root,root,-)
 /usr/lib/systemd/system/nvmefc-boot-connections.service
 /usr/lib/systemd/system/nvmf-autoconnect.service
+/usr/lib/systemd/system/nvmf-connect-nbft.service
 /usr/lib/systemd/system/nvmf-connect.target
 /usr/lib/systemd/system/nvmf-connect@.service
