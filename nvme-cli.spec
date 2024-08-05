@@ -6,10 +6,10 @@
 # autospec commit: f35655a
 #
 Name     : nvme-cli
-Version  : 2.10
-Release  : 30
-URL      : https://github.com/linux-nvme/nvme-cli/archive/v2.10/nvme-cli-2.10.tar.gz
-Source0  : https://github.com/linux-nvme/nvme-cli/archive/v2.10/nvme-cli-2.10.tar.gz
+Version  : 2.10.2
+Release  : 31
+URL      : https://github.com/linux-nvme/nvme-cli/archive/v2.10.2/nvme-cli-2.10.2.tar.gz
+Source0  : https://github.com/linux-nvme/nvme-cli/archive/v2.10.2/nvme-cli-2.10.2.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : CC0-1.0 GPL-2.0 LGPL-2.1 MIT
@@ -76,10 +76,10 @@ services components for the nvme-cli package.
 
 
 %prep
-%setup -q -n nvme-cli-2.10
-cd %{_builddir}/nvme-cli-2.10
+%setup -q -n nvme-cli-2.10.2
+cd %{_builddir}/nvme-cli-2.10.2
 pushd ..
-cp -a nvme-cli-2.10 buildavx2
+cp -a nvme-cli-2.10.2 buildavx2
 popd
 
 %build
@@ -87,7 +87,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1722611867
+export SOURCE_DATE_EPOCH=1722884766
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 CLEAR_INTERMEDIATE_CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
